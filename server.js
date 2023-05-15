@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const router = express.Router()
 
 var app = express();
@@ -7,6 +8,8 @@ var app = express();
 //     res.send('Holi soy un server en express')
 // })
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
 app.use(router);
 
 router.get('/', function(req,res){
@@ -14,7 +17,9 @@ router.get('/', function(req,res){
 })
 
 router.post('/message', function(req,res){
-    res.send('mensaje añadido')
+    console.log(req.query)
+    console.log(req.body)
+    res.send('mensaje añadido correctamente')
 })
 
 app.listen(3500)
