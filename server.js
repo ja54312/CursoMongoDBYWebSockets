@@ -12,7 +12,11 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(router);
 
-router.get('/', function(req,res){
+router.get('/message', function(req,res){
+    res.header({
+        "custom-header": "valor personalizado"
+    })
+    console.log(req.headers)
     res.send('hola desde get')
 })
 
