@@ -26,5 +26,11 @@ router.post('/message', function(req,res){
     res.send('mensaje añadido correctamente')
 })
 
+router.delete('/message', function(req,res){
+    console.log(req.query)
+    console.log(req.body)
+    res.status(201).send({error:'',body:'creado correctamente'})
+})
+
 app.listen(3500)
 console.log('La app esta en : http://localhost:3500')
