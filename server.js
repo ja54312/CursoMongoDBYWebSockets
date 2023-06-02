@@ -35,5 +35,7 @@ router.delete('/message', function(req,res){
     res.status(201).send({error:'',body:'creado correctamente'})
 })
 
+app.use('/app',express.static('public'));
+
 app.listen(3500)
 console.log('La app esta en : http://localhost:3500')
