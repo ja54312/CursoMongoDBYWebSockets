@@ -1,25 +1,28 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const app = express();
+const server = require('http').Server(app);
 
-const db = require('./db')
+const config = require('./config');
 
-db('mongodb+srv://ija54312:NsT9IXvSJpCfuOyS@cluster0.xiczhs4.mongodb.net/Telegram')
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const socket = require('./socket');
+const db = require('./db');
+const router = require('./network/routes');
 
-const router = require('./network/routes')
+db(config.dbUrl);
 
-var app = express();
+app.use(cors());
 
-// app.use('/',function(req,res){
-//     res.send('Holi soy un server en express')
-// })
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
-//app.use(router);
+socket.connect(server);
 
 router(app);
 
-app.use('/app',express.static('public'));
+app.use(publicRoute, express.static('public'));
 
-app.listen(3500)
-console.log('La app esta en : http://localhost:3500')
+server.listen(config.port, function () {
+    console.log('La aplicación está escuchando en '+ config.host +':' + config.port);
+});
