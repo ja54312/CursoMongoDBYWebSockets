@@ -1,6 +1,4 @@
 const store = require('./store');
-const socket = require('../../socket').socket;
-const config = require('../../config');
 
 function addMessage(chat, user, message, file) {
     return new Promise((resolve, reject) => {
@@ -12,7 +10,7 @@ function addMessage(chat, user, message, file) {
 
         let fileUrl = '';
         if (file) {
-            fileUrl = config.host + ':' + config.port + config.publicRoute + '/'+ config.filesRoute + '/' + file.filename;
+            fileUrl = 'http://localhost:3000/app/files/' + file.filename;
         }
 
         const fullMessage = {
@@ -24,8 +22,6 @@ function addMessage(chat, user, message, file) {
         };
     
         store.add(fullMessage);
-
-        socket.io.emit('message', fullMessage);
 
         resolve(fullMessage);
     });
